@@ -1,4 +1,4 @@
-name: Test project
+[⚠️ Suspicious Content] name: Test project
 
 on: [push, pull_request]
 
@@ -15,6 +15,7 @@ jobs:
           - playmode
           - editmode
           - standalone
+        projectPath: ['.']
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,6 +39,11 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: ${{ matrix.testMode }} Test Results
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
+          # Add these for standalone mode
+          buildName: 'StandaloneBuild'
+          buildPath: 'build/standalone'
+          # Specify the platform for standalone build
+          buildTarget: 'StandaloneOSX'  # or 'StandaloneWindows64' depending on your needs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
