@@ -43,7 +43,7 @@ jobs:
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
           buildName: 'StandaloneBuild'
           buildPath: 'build/standalone'
-          buildTarget: 'StandaloneWindows64'  # Change to 'StandaloneWindows64' or 'StandaloneLinux64' as needed
+          buildTarget: 'StandaloneWindowsOSX'  # Change to 'StandaloneWindows64' or 'StandaloneLinux64' as needed
 
       - uses: actions/upload-artifact@v4
         if: always()
