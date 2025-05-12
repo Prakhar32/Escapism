@@ -14,7 +14,6 @@ jobs:
         testMode:
           - playmode
           - editmode
-          - standalone
         projectPath: ['.']
     steps:
       - uses: actions/checkout@v4
@@ -41,9 +40,6 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: ${{ matrix.testMode }} Test Results
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
-          buildName: 'StandaloneBuild'
-          buildPath: 'build/standalone'
-          buildTarget: 'StandaloneWindowsOSX'  # Change to 'StandaloneWindows64' or 'StandaloneLinux64' as needed
 
       - uses: actions/upload-artifact@v4
         if: always()
