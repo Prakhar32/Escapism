@@ -8,25 +8,47 @@ public class SteamTests
     [Test]
     public void HeatedRemainsSteam()
     {
-        Matter steam = new Steam();
-        Matter newState = steam.Heated(); 
-        Assert.IsTrue(newState.GetType().IsAssignableFrom(typeof(Steam)));
+        float mass = 50f;
+        Matter matter = new Hydro(101f, mass);
+        matter.Heated(100);
+        Assert.IsTrue(matter.GetState().GetType().IsAssignableFrom(typeof(Steam)));
     }
 
     [Test]
     public void CooledIntoWater()
     {
-        Matter steam = new Steam();
-        Matter newState = steam.Cooled();
-        Assert.IsTrue(newState.GetType().IsAssignableFrom(typeof(Water)));
+        float mass = 50f;
+        Matter matter = new Hydro(101f, mass);
+        matter.Cooled(mass * Constants.kiloJouleMultiplier * 2.3f);
+        Assert.IsTrue(matter.GetState().GetType().IsAssignableFrom(typeof(Water)));
     }
 
     [Test]
     public void CooledTwiceIntoIce()
     {
-        Matter matter = new Steam();
-        matter = matter.Cooled();
-        matter = matter.Cooled();
-        Assert.IsTrue(matter.GetType().IsAssignableFrom(typeof(Ice)));
+        float mass = 50f;
+        Matter matter = new Hydro(101f, mass);
+        matter.Cooled(mass * Constants.kiloJouleMultiplier * 2.3f);
+        matter.Cooled(mass * Constants.kiloJouleMultiplier);
+        Assert.IsTrue(matter.GetState().GetType().IsAssignableFrom(typeof(Ice)));
+    }
+
+    [Test]
+    public void CoolingInsufficient()
+    {
+        float mass = 50f;
+        Matter matter = new Hydro(101f, mass);
+        matter.Cooled(mass * 10);
+        Assert.IsTrue(matter.GetState().GetType().IsAssignableFrom(typeof(Steam)));
+    }
+
+    [Test]
+    public void HeatedRequiresMoreCooling()
+    {
+        float mass = 50f;
+        Matter matter = new Hydro(101f, mass);
+        matter.Heated(mass * Constants.kiloJouleMultiplier * 2.3f);
+        matter.Cooled(mass * Constants.kiloJouleMultiplier * 2.3f);
+        Assert.IsFalse(matter.GetState().GetType().IsAssignableFrom(typeof(Water)));
     }
 }
