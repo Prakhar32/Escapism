@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Constants
 {
-    public const string WaterString = "Water";
-    public const string SteamString = "Steam";
-    public const string IceString = "Ice";
+    public const float kiloJouleMultiplier = 1000f;
+    public const float MegaJouleMultiplier = 1000000f;
+
 }

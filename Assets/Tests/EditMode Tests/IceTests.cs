@@ -8,25 +8,53 @@ public class IceTests
     [Test]
     public void HeatedToWater()
     {
-        Matter ice = new Ice();
-        Matter newState = ice.Heated();
-        Assert.IsTrue(newState.GetType().IsAssignableFrom(typeof(Water)));
+        float mass = 50f;
+        Matter matter = new Hydro(-1f, mass);
+        matter.Heated(mass * 400);
+        Assert.IsTrue(matter.GetState().GetType().IsAssignableFrom(typeof(Water)));
     }
 
     [Test]
-    public void CoolingDoesNothing()
+    public void CoolingDoesNotChangeState()
     {
-        Matter ice = new Ice();
-        Matter newState = ice.Cooled();
-        Assert.IsTrue(newState.GetType().IsAssignableFrom(typeof(Ice)));
+        float mass = 50f;
+        Matter matter = new Hydro(-1f, mass);
+        matter.Cooled(mass * 10);
+        Assert.IsTrue(matter.GetState().GetType().IsAssignableFrom(typeof(Ice)));
     }
 
     [Test]
     public void HeatingTwiceIntoSteam()
     {
-        Matter matter = new Ice();
-        matter = matter.Heated();
-        matter = matter.Heated();
-        Assert.IsTrue(matter.GetType().IsAssignableFrom(typeof(Steam)));
+        float mass = 50f;
+        Matter matter = new Hydro(-1f, mass);
+        matter.Heated(mass * 1000);
+        matter.Heated(mass * 5 * Constants.MegaJouleMultiplier);
+        Assert.IsTrue(matter.GetState().GetType().IsAssignableFrom(typeof(Steam)));
+    }
+
+    [Test]
+    public void InsufficientHeating()
+    {
+        float mass = 50f;
+        Matter matter = new Hydro(-1f, mass);
+        matter.Heated(mass * 5);
+        Assert.IsFalse(matter.GetState().GetType().IsAssignableFrom(typeof(Water)));
+    }
+
+
+    [Test]
+    public void CoolingMoreRequiredMoreHeating()
+    {
+        //Given
+        float mass = 50f;
+        Matter matter = new Hydro(-1f, mass);
+        
+        //When
+        matter.Cooled(mass * 400);
+        matter.Heated(mass * 400);
+
+        //Then
+        Assert.IsFalse(matter.GetState().GetType().IsAssignableFrom(typeof(Water)));
     }
 }

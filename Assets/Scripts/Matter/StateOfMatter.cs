@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public interface Matter
+public interface StateOfMatter
 {
     void Heated(float energyReceived);
     void Cooled(float energyExpelled);
-    StateOfMatter GetState();
 }
