@@ -11,4 +11,6 @@ public class HydroConstants
 
     public const float LatentHeatofVaporization = 2257f;
     public const float LatentHeatofFusion = 334f;
+
+    public const float referenceMass = 1000f;
 }
