@@ -43,7 +43,7 @@ public class Water : StateOfMatter
             convertintoIce(energyExpelled);
 
         float sensibleHeat = hydro.Temperature * hydro.mass * HydroConstants.SpecificHeatofWater;
-         float remainingEnergy = energyExpelled - sensibleHeat;
+        float remainingEnergy = energyExpelled - sensibleHeat;
 
         if (energyExpelled > 0)
         {

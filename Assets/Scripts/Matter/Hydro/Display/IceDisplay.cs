@@ -18,7 +18,10 @@ public class IceDisplay : MonoBehaviour
 
     void Start()
     {
-        if( _hydro == null )
+        if (_hydro == null)
+        {
             Destroy(this);
+            throw new MissingReferenceException ();
+        }
     }
 }
