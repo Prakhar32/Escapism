@@ -10,7 +10,7 @@ public class WaterDisplayTests
     {
         LogAssert.ignoreFailingMessages = true;
         GameObject g = new GameObject();
-        WaterDisplay waterDisplay = g.AddComponent<WaterDisplay>();
+        HydroDisplay waterDisplay = g.AddComponent<HydroDisplay>();
         yield return null;
 
         Assert.IsTrue(waterDisplay == null);
@@ -21,7 +21,7 @@ public class WaterDisplayTests
     {
         LogAssert.ignoreFailingMessages = true;
         GameObject g = new GameObject();
-        WaterDisplay waterDisplay = g.AddComponent<WaterDisplay>();
+        HydroDisplay waterDisplay = g.AddComponent<HydroDisplay>();
         waterDisplay.SetHydro(new Hydro(-1, 50));
         yield return null;
         Assert.IsTrue(waterDisplay != null);
@@ -31,9 +31,9 @@ public class WaterDisplayTests
     public IEnumerator SizeProportionalToMass()
     {
         GameObject g1 = new GameObject();
-        WaterDisplay waterDisplay1 = g1.AddComponent<WaterDisplay>();
+        HydroDisplay waterDisplay1 = g1.AddComponent<HydroDisplay>();
         GameObject g2 = new GameObject();
-        WaterDisplay waterDisplay2 = g2.AddComponent<WaterDisplay>();
+        HydroDisplay waterDisplay2 = g2.AddComponent<HydroDisplay>();
         float mass1 = 50f;
         float mass2 = 100f;
 
