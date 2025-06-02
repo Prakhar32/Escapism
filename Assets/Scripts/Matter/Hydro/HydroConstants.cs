@@ -13,4 +13,8 @@ public class HydroConstants
     public const float LatentHeatofFusion = 334f;
 
     public const float referenceMass = 1000f;
+
+    public const float DensityofIce = 0.9167f;
+    public const float DensityofWater = 0.9998f;
+    public const float DensityofSteam = 0.0006f;
 }

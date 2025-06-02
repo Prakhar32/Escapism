@@ -41,8 +41,54 @@ public class HydroDisplayTests
         hydroDisplay2.SetHydro(new Hydro(5, mass2));
 
         yield return null;
-        Assert.IsTrue(hydroDisplay1.gameObject.transform.localScale.x < hydroDisplay2.gameObject.transform.localScale.x);
-        Assert.IsTrue(hydroDisplay1.gameObject.transform.localScale.y < hydroDisplay2.gameObject.transform.localScale.y);
-        Assert.IsTrue(hydroDisplay1.gameObject.transform.localScale.z < hydroDisplay2.gameObject.transform.localScale.z);
+        Assert.IsTrue (hydroDisplay1.GetVolume() < hydroDisplay2.GetVolume());
+    }
+
+    [UnityTest]
+    public IEnumerator IceMoreVoluminousThanWater()
+    {
+        GameObject g1 = new GameObject();
+        HydroDisplay waterDisplay = g1.AddComponent<HydroDisplay>();
+        GameObject g2 = new GameObject();
+        HydroDisplay iceDisplay = g2.AddComponent<HydroDisplay>();
+        waterDisplay.SetHydro(new Hydro(5, 50));
+        iceDisplay.SetHydro(new Hydro(-5, 50));
+        yield return null;
+
+        Assert.IsTrue(waterDisplay.GetVolume() < iceDisplay.GetVolume());
+    }
+
+    [UnityTest]
+    public IEnumerator SteamMoreVoluminousThanIce()
+    {
+        GameObject g1 = new GameObject();
+        HydroDisplay iceDisplay = g1.AddComponent<HydroDisplay>();
+        GameObject g2 = new GameObject();
+        HydroDisplay steamDisplay = g2.AddComponent<HydroDisplay>();
+        iceDisplay.SetHydro(new Hydro(-5, 50));
+        steamDisplay.SetHydro(new Hydro(105, 50));
+        yield return null;
+
+        Assert.IsTrue(iceDisplay.GetVolume() < steamDisplay.GetVolume());
+    }
+
+    [UnityTest]
+    public IEnumerator StateChangeAffectVolume()
+    {
+        //Given
+        GameObject g = new GameObject();
+        HydroDisplay hydroDisplay = g.AddComponent<HydroDisplay>();
+        float mass = 50f;
+        Hydro hydro = new Hydro(-5, mass);
+        hydroDisplay.SetHydro(hydro);
+        yield return null;
+        
+        //When
+        float initialVolume = hydroDisplay.GetVolume();
+        hydro.Heated(5 * mass * Constants.kiloJouleMultiplier);
+        float newVolume = hydroDisplay.GetVolume();
+
+        //Then
+        Assert.AreNotEqual(initialVolume, newVolume);
     }
 }

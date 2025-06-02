@@ -24,4 +24,26 @@ public class HydroDisplay : MonoBehaviour
             throw new MissingReferenceException();
         }
     }
+
+    public float GetVolume()
+    {
+        float volume = 0;
+        float density = getDensity();
+
+        volume = _hydro.mass / density;
+        return volume;
+    }
+
+    private float getDensity()
+    {
+        float density = 0f;
+        if (_hydro.GetState().GetType().IsAssignableFrom(typeof(Ice)))
+            density = HydroConstants.DensityofIce;
+        else if (_hydro.GetState().GetType().IsAssignableFrom(typeof(Water)))
+            density = HydroConstants.DensityofWater;
+        else
+            density = HydroConstants.DensityofSteam;
+
+        return density;
+    }
 }
