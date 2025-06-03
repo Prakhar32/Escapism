@@ -13,7 +13,8 @@ public class HydroDisplay : MonoBehaviour
     private void SetSize()
     {
         float scale = _hydro.mass / HydroConstants.referenceMass;
-        transform.localScale = new Vector3(scale, scale, scale);
+        float modifiedScale = scale * GetVolume();
+        transform.localScale = new Vector3(modifiedScale, modifiedScale, modifiedScale);
     }
 
     void Start()
